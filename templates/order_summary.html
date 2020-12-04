@@ -1,0 +1,41 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Order Summary{% endblock %}
+
+{% block body %}
+
+<!--Main layout-->
+<main>
+    <div class="container">
+
+        <div class="table-responsive text-nowrap">
+            <h2 class="mt-2">Order Summary</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Item Title</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Item Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order_item in object.items.all %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>{{ order_item.item.title }}</td>
+                        <td>{{ order_item.item.price }}</td>
+                        <td>{{ order_item.quantity }}</td>
+                        <td>???</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+</main>
+<!--Main layout-->
+{% endblock %}

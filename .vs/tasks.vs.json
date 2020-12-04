@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-django_project_boilerplate",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}
