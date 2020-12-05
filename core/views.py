@@ -57,8 +57,9 @@ def add_to_cart(request, slug):
     if order_qs.exists():
         order = order_qs[0]
         # check if the order item is in the order
-        if order.items.filter(item__slug=item.slug).exists():        
-            order_item.quantity = F('quantity') + 1 # Was += 1, refer to https://docs.djangoproject.com/en/3.1/ref/models/expressions/
+        if order.items.filter(item__slug=item.slug).exists():   
+            order_item.quantity = F('quantity') + 1 # Was += 1, refer to https://docs.djangoproject.com/en/3.1/ref/models/expressions/            
+            order_item.save()
             messages.info(request, "This item quantity was updated.")
             return redirect("core:order-summary")
         else:
