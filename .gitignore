@@ -4,9 +4,10 @@ env
 media
 .DS_Store
 *.sqlite3
-.env
+*.env
 
 # Accept these files in the repository
 !.gitignore
 !.travis.yml
+/.env
 /.vscode
