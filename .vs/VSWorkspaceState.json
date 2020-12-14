@@ -2,10 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\core",
-    "\\core\\templatetags",
-    "\\KLecommerce",
-    "\\templates"
+    "\\KLecommerce"
   ],
-  "SelectedNode": "\\core\\views.py",
   "PreviewInSolutionExplorer": false
 }
