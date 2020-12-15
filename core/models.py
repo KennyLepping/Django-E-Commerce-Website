@@ -3,6 +3,7 @@ from django.db import models
 from django.shortcuts import reverse
 from django_countries.fields import CountryField
 
+
 CATEGORY_CHOICES = (
     ('S', 'Shirt'),  # First parameter is what goes in the DB and 2nd is what's displayed
     ('SW', 'Sportwear'),
@@ -14,6 +15,11 @@ LABEL_CHOICES = (
     ('P', 'primary'),
     ('S', 'secondary'),  # primary, secondary... are from the Bootstrap CSS colors
     ('D', 'danger')
+)
+
+ADDRESS_CHOICES = (
+    ('B', 'Billing'),
+    ('S', 'Shipping'),
 )
 
 # An Item becomes an OrderItem when in the shopping cart
@@ -83,8 +89,10 @@ class Order(models.Model):  # Is like the shopping cart, all order items go in h
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
+    shipping_address = models.ForeignKey( # Has related name because the ForeignKey is the same
+        'Address', related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
     billing_address = models.ForeignKey(
-        'BillingAddress', on_delete=models.SET_NULL, blank=True, null=True)
+        'Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
     payment = models.ForeignKey(
         'Payment', on_delete=models.SET_NULL, blank=True, null=True)
     coupon = models.ForeignKey(
@@ -117,16 +125,21 @@ class Order(models.Model):  # Is like the shopping cart, all order items go in h
         return total
 
 
-class BillingAddress(models.Model):
+class Address(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     street_address = models.CharField(max_length=100)
     apartment_address = models.CharField(max_length=100)
     country = CountryField(multiple=False)
     zip = models.CharField(max_length=100)
+    address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
+    default = models.BooleanField(default=False) # For setting a default address
 
     def __str__(self):
         return self.user.username
+
+    class Meta:
+        verbose_name_plural = 'Addresses'
 
 
 class Payment(models.Model):
